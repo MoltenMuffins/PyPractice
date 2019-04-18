@@ -1,36 +1,24 @@
-def ispalindrome(word):
-    '''
-    This function is a helper function for identifying if a string is a palindrome.
-    '''
-    word = str(word)
-    wordlen=len(word)
-    count=0
-    for (i,j) in zip(word,reversed(word)):
-        if i == j:
-            count+=1
-    if count == wordlen:
-        return True
-    else:
-        return False
-
 def makepalindrome(word):
     '''
-    This function generates the nearest palindrome from a given string.
-    If the string is already a palindrome, then the original string is returned.
+    This function generates the nearest (least character additions required) 
+    palindrome from a given string. If the string is already a palindrome, 
+    then the original string is returned.
     '''
     word = str(word)
-    if ispalindrome(word) == True:
+    if word == word[::-1]:
         return print('(no change) '+word)
     else:
-        # First we reverse the string
-        drow = ''
-        for i in reversed(word):
-            drow += i
-        for i in range(len(drow)):
-            temp = drow[:i]+word
+        for i in range(len(word)):
+            # Python slicing syntax is word[start:stop:step]
+            # We iterate through the last (i+1) letters of the word
+            # in reversed order with step = -1
+            temp = word[:-i-1:-1]+word
             print(temp)
-            if ispalindrome(temp) == True:
+            # We check if temp is equal to itself reversed
+            if temp == temp[::-1]:
+                # If true, we return temp as it is a palindrome 
                 return print('(result) '+temp)
+
         return print('(error) palindrome not found')
 
-makepalindrome('racecar')
+makepalindrome('race')
