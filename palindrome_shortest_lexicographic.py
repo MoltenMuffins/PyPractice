@@ -11,21 +11,6 @@ There are seven other palindromes that can be made from "race" by adding three l
 but "ecarace" comes first alphabetically.
 '''
 
-def ispalindrome(word):
-    '''
-    This function is a helper function for identifying if a string is a palindrome.
-    '''
-    word = str(word)
-    wordlen=len(word)
-    count=0
-    for (i,j) in zip(word,reversed(word)):
-        if i == j:
-            count+=1
-    if count == wordlen:
-        return True
-    else:
-        return False
-
 def makepalindrome(word):
     '''
     This function generates palindromes from a given string 
@@ -34,24 +19,25 @@ def makepalindrome(word):
     '''
     list_of_palindromes = []
     word = str(word)
-    if ispalindrome(word) == True:
+    if word == word[::-1]:
         list_of_palindromes.append(word)
     # On to generating palindromes.
-    # First we reverse the given string
-    drow = ''
-    # Next we add on the last i letters to the front of the 
-    # word to generate new palindromes
-    for i in reversed(word):
-        drow += i
-    for i in range(len(drow)):
-        temp = drow[:i+1]+word
-        if ispalindrome(temp) == True:
+    # Python slicing syntax is word[start:stop:step]
+    # We iterate through the last (i+1) letters of the word
+    # in reversed order with step = -1, and add them to the
+    # front of the word to generate new palindromes
+    for i in range(len(word)):
+        temp = word[:-i-1:-1]+word
+        if temp == temp[::-1]:
             list_of_palindromes.append(temp)
+
     # Next we sort the list by the string values and return the 
-    # first string entry which should give us the lexicographically 
+    # first string entry which should give us the lexicographically
     # earliest palindrome, or the palindrome that is shortest.
+    # We can use the sort() methods like this as they are 'stable'
+    # sorts.
     list_of_palindromes.sort()
     list_of_palindromes.sort(key=len)
     return list_of_palindromes[0]
 
-print(makepalindrome('google'))
+print(makepalindrome('quora'))
